@@ -5,6 +5,7 @@ import (
 	"testing"
 	"k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/tools/cache"
+
 )
 
 var host = `https://10.151.32.60:7443`
@@ -46,7 +47,7 @@ i8a2Sc1FX8VBuuzLt81vgyrN0jj4zsZFsEX+2dH71g==
 -----END EC PRIVATE KEY-----`
 
 func Test_NewKubeClient(t *testing.T) {
-	kube := NewKubeClient(host, ca, cert, key)
+	kube := NewKubeClientWithFile(host, ca, cert, key)
 	if kube == nil {
 		t.Fatalf("NewKubeClient error")
 	}
