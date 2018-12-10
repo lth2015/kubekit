@@ -1,10 +1,12 @@
-package kubeclient
+package test
 
 import (
 	"fmt"
 	"testing"
-	"k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/tools/cache"
+	"k8s.io/apimachinery/pkg/apis/meta/v1"
+	"github.com/lth2015/kubekit/kubeclient"
+	"github.com/lth2015/kubekit/appmachinery"
 
 )
 
@@ -47,7 +49,7 @@ i8a2Sc1FX8VBuuzLt81vgyrN0jj4zsZFsEX+2dH71g==
 -----END EC PRIVATE KEY-----`
 
 func Test_NewKubeClient(t *testing.T) {
-	kube := NewKubeClientWithFile(host, ca, cert, key)
+	kube := kubeclient.NewKubeClientWithFile(host, ca, cert, key)
 	if kube == nil {
 		t.Fatalf("NewKubeClient error")
 	}
