@@ -76,7 +76,6 @@ func NewKubeClient(host, ca, cert, key string) *KubeClient {
 
 	client, err := kubernetes.NewForConfig(cfg)
 	if err != nil {
-		log.Errorf("kubernetes.NewForConfig error: err=%s", err)
 		return nil
 	}
 
