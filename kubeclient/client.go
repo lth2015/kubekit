@@ -31,19 +31,16 @@ func (this *KubeClient) load() error {
 
 	ca, err := ioutil.ReadFile(this.ca)
 	if err != nil {
-		log.Errorf("ioutil.ReadFile read CA failed: file=%s, err=%s", this.ca, err)
 		return err
 	}
 
 	cert, err := ioutil.ReadFile(this.cert)
 	if err != nil {
-		log.Errorf("ioutil.ReadFile read CERT failed: file=%s, err=%s", this.cert, err)
 		return err
 	}
 
 	key, err := ioutil.ReadFile(this.key)
 	if err != nil {
-		log.Errorf("ioutil.ReadFile read Key failed: file=%s, err=%s", this.key, err)
 		return err
 	}
 
@@ -58,7 +55,6 @@ func (this *KubeClient) load() error {
 
 	client, err := kubernetes.NewForConfig(cfg)
 	if err != nil {
-		log.Errorf("kubernetes.NewForConfig error: err=%s", err)
 		return err
 	}
 

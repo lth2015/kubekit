@@ -41,7 +41,6 @@ func GetOwner(clientset *kubernetes.Clientset, namespace, name string) (*Owner, 
 func getDeploymentByReplicaSet(clientset *kubernetes.Clientset, namespace, name string) (*Owner, error) {
 	rs, err := clientset.AppsV1().ReplicaSets(namespace).Get(name, meta_v1.GetOptions{})
 	if err != nil {
-		log.Errorf("GetDeploymentByReplicaSet get replicaset error: err=%s", err)
 		return nil, err
 	}
 
