@@ -10,7 +10,7 @@ kubekit is a tool-kit for kubernetes development.
 ### Installation
 
 ```bash
-go get -u github.com/lth2015/
+go get -u github.com/lth2015/kubekit
 ```
 
 ### Features
