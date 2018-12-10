@@ -15,7 +15,7 @@ type KubeClient struct {
 	Client *kubernetes.Clientset
 }
 
-func NewKubeClientWithFile(host, ca, cert, key string) *KubeClient {
+func NewKubeClientWithFile(host, ca, cert, key string) (*KubeClient, error) {
 	client := &KubeClient{
 		Host: host,
 		ca: ca,
@@ -23,8 +23,8 @@ func NewKubeClientWithFile(host, ca, cert, key string) *KubeClient {
 		key: key,
 	}
 
-	client.load()
-	return client
+	err := client.load()
+	return client, err
 }
 
 func (this *KubeClient) load() error {
@@ -62,8 +62,7 @@ func (this *KubeClient) load() error {
 	return nil
 }
 
-
-func NewKubeClient(host, ca, cert, key string) *KubeClient {
+func NewKubeClient(host, ca, cert, key string) (*KubeClient, error) {
 	kube := &KubeClient{}
 	cfg := &rest.Config{
 		Host: host,
@@ -76,9 +75,9 @@ func NewKubeClient(host, ca, cert, key string) *KubeClient {
 
 	client, err := kubernetes.NewForConfig(cfg)
 	if err != nil {
-		return nil
+		return nil, err
 	}
 
 	kube.Client = client
-	return kube
+	return kube, nil
 }
