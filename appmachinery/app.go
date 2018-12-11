@@ -85,5 +85,5 @@ func getCronJobByJob(clientset *kubernetes.Clientset, namespace, name string) (*
 			return owner, nil
 		}
 	}
-	return nil, fmt.Errorf("Job %s/%s has no controller of cronjob", namespace, name)
+	return owner, fmt.Errorf("Job %s/%s has no controller of cronjob", namespace, name)
 }
