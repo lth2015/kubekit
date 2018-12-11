@@ -44,9 +44,9 @@ func getDeploymentByReplicaSet(clientset *kubernetes.Clientset, namespace, name 
 		return nil, err
 	}
 
+	owner := &Owner{}
 	for _, ref := range rs.OwnerReferences {
 		if strings.EqualFold(ref.Kind, "Deployment") {
-			owner := &Owner{}
 			owner.Kind = ref.Kind
 			owner.Name = ref.Name
 			owner.ApiVersion = ref.APIVersion
@@ -75,9 +75,9 @@ func getCronJobByJob(clientset *kubernetes.Clientset, namespace, name string) (*
 		return nil, err
 	}
 
+	owner := &Owner{}
 	for _, ref := range job.OwnerReferences {
 		if strings.EqualFold(ref.Kind, "CronJob") {
-			owner := &Owner{}
 			owner.Kind = ref.Kind
 			owner.Name = ref.Name
 			owner.Controller = ref.Controller
