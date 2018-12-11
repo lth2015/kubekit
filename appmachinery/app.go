@@ -32,7 +32,7 @@ func GetOwner(clientset *kubernetes.Clientset, namespace, name string) (*Owner, 
 		case "Job":
 			owner, err = getCronJobByJob(clientset, pod.Namespace, ref.Name)
 		default:
-			owner, err = getUnknownOwner()
+			owner, err = getUnknownOwner(ref)
 		}
 	}
 
