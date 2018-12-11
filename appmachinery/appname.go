@@ -30,11 +30,7 @@ func NewWorkloadRegex() *WorkloadRegex {
 
 func (this *WorkloadRegex) GetAppName(pod string) (string, error) {
 	ss := strings.Split(pod, "-")
-	if len(ss) <= 2 {
-		return "", fmt.Errorf("Illegal pod name: pod=%s", pod)
-	}
-
-	if this.randomRegex.MatchString(ss[len(ss)-1]) {
+	if len(ss) >= 2 && this.randomRegex.MatchString(ss[len(ss)-1]) {
 		if this.hashRegex.MatchString(ss[len(ss)-2]) {
 			// Deployment or CronJob
 			index := strings.LastIndex(pod, "-")
@@ -50,7 +46,7 @@ func (this *WorkloadRegex) GetAppName(pod string) (string, error) {
 		}
 	}
 
-	if !this.hashRegex.MatchString(ss[len(ss)-2]) && this.sequnceRegex.MatchString(ss[len(ss)-1]) {
+	if len(ss) >= 1 && !this.hashRegex.MatchString(ss[len(ss)-2]) && this.sequnceRegex.MatchString(ss[len(ss)-1]) {
 		// StatefulSet
 		index := strings.LastIndex(pod, "-")
 		app := pod[:index]
