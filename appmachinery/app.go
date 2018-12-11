@@ -31,6 +31,8 @@ func GetOwner(clientset *kubernetes.Clientset, namespace, name string) (*Owner, 
 			owner, err = getOwner(ref)
 		case "Job":
 			owner, err = getCronJobByJob(clientset, pod.Namespace, ref.Name)
+		default:
+			owner, err = getUnknownOwner()
 		}
 	}
 
@@ -55,7 +57,7 @@ func getDeploymentByReplicaSet(clientset *kubernetes.Clientset, namespace, name 
 		}
 	}
 
-	return nil, fmt.Errorf("ReplicaSet %s/%s has no controller of deployment", namespace, name)
+	return owner, fmt.Errorf("ReplicaSet %s/%s has no controller of deployment", namespace, name)
 }
 
 // Pod controlled by StatefulSet/DaemonSet
@@ -86,4 +88,23 @@ func getCronJobByJob(clientset *kubernetes.Clientset, namespace, name string) (*
 		}
 	}
 	return owner, fmt.Errorf("Job %s/%s has no controller of cronjob", namespace, name)
+}
+
+// Unknown controller
+func getUnknownOwner(reference meta_v1.OwnerReference) (*Owner, error) {
+	owner := &Owner{}
+	b := false
+	if owner.Kind = reference.Kind; strings.EqualFold(owner.Kind, "") {
+		owner.Kind = "Unknown"
+	}
+
+	if owner.Name = reference.Name; strings.EqualFold(owner.Name, "") {
+		owner.Name = "Unknown"
+	}
+
+	if owner.ApiVersion = reference.APIVersion; strings.EqualFold(owner.ApiVersion, "") {
+		owner.ApiVersion = "Unknown"
+	}
+	owner.Controller = &b
+	return owner, fmt.Errorf("Unknown resource of Unknown controller")
 }
